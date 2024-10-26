@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = ViewBag.Supplier.CompanyName;
+}
+<div class="col-9">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">@ViewBag.Supplier.Email</h1>
+            </div>
+            <div class="card-body">
+                <p>@ViewBag.Supplier.Logo</p>
+                <p>@ViewBag.Supplier.Phone</p>
+                <p>@ViewBag.Supplier.CompanyName</p>
+                <p>@ViewBag.Supplier.ContactName</p>
+                <p>@ViewBag.Supplier.Address</p>
+                <p>@ViewBag.Supplier.Description</p>
+
+            </div>
+        </div>
+    </div>

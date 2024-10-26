@@ -1,0 +1,56 @@
+@model IEnumerable<Cart>
+<table class="table table-borderd">
+    <thead class="table-dark">
+        <tr>
+            <th>Product</th>
+            <th>Image</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+            <th>Command</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr v="@item.ProductId">
+                <td>@item.ProductName</td>
+                <td>
+                    <img width="80" src="/images/products/@item.Image" alt="@item.ProductName">
+                </td>
+                <td>@item.Price</td>
+                <td>
+                    <input class="qty" type="number" min="1" value="@item.Quantity">
+                </td>
+                <td>@(item.Quantity * item.Price)</td>
+                <td>
+                    <a class="btn btn-outline-primary" href="/cart/delete/@item.ProductId">Delete</a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+
+    <tfoot>
+        <th colspan="4">Total</th>
+        <td>@Model.Sum(p => p.Price * p.Quantity)</td>
+        <td></td>
+    </tfoot>
+
+</table>
+<div class="text-center">
+    <a href="/cart/checkout" class="btn btn-outline-primary">checkout</a>
+</div>
+
+@section Scripts {
+    <script>
+        $('.qty').change(function () {
+            let o = { 'quantity': $(this).val(), 'productId': $(this).closest('tr').attr('v') };
+            console.log(o);
+
+            $.post('/cart/edit', o, (d) => {
+                window.location.reload();
+            })
+        })
+    </script>
+}

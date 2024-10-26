@@ -1,0 +1,98 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    google.charts.load("current", { packages: ["corechart", "orgchart"] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Task', 'Total Product per Category'],
+    @foreach (CategoryProduct item in ViewBag.CategoryProduct)
+    {
+        @Html.Raw($"['{item.CategoryName}', {item.Total}],")
+    }
+        ]);
+        var options = {
+            title: 'Category Product',
+            is3D: true,
+        };
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        chart.draw(data, options);
+    }
+
+    google.charts.setOnLoadCallback(drawChartScratter);
+    function drawChartScratter() {
+        var data = google.visualization.arrayToDataTable([
+            ['Age', 'Sales'],
+    @foreach (SalesByAge item in ViewBag.GetSalesByAge)
+    {
+        @Html.Raw($"[{item.Age}, {item.Sales}],")
+        ;
+    }
+        ]);
+
+        var options = {
+            title: 'Age vs. Weight comparison',
+            hAxis: { title: 'Age', minValue: @ViewBag.MinMax.AgeMin, maxValue: @ViewBag.MinMax.AgeMax},
+            vAxis: { title: 'Sales', minValue: @ViewBag.MinMax.SalesMin, maxValue: @ViewBag.MinMax.SalesMax},
+            legend: 'none'
+        };
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('scratterchart'));
+        chart.draw(data, options);
+    }
+
+    google.charts.setOnLoadCallback(drawOrgChart);
+
+    function drawOrgChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Name');
+        data.addColumn('string', 'Manager');
+        data.addColumn('string', 'ToolTip');
+        data.addRows([
+    @foreach (var item in ViewBag.Employee)
+    {
+        @Html.Raw($"['{item.EmployeeName}', '{item.ParentName}', ''],")
+    }
+       ]);
+
+        var chart = new google.visualization.OrgChart(document.getElementById('orgChart'));
+        chart.draw(data, { 'allowHtml': true });
+    }
+
+    google.charts.setOnLoadCallback(hung);
+
+    function hung() {
+        var data = google.visualization.arrayToDataTable([
+            ['Year', 'Sales', 'Expenses'],
+    @foreach (SalesAndExpenses item in ViewBag.SalesAndExpenses)
+    {
+        @Html.Raw($"['{item.Year}', {item.Sales}, {item.Expenses}],")
+    }
+        ]);
+
+        var options = {
+            title: 'Company Performance',
+            curveType: 'function',
+            legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+    }
+
+</script>
+<div class="row">
+    <div class="col-6">
+        <div id="piechart_3d" style="width: 650px; height: 500px;"></div>
+    </div>
+    <div class="col-6">
+        <div id="scratterchart" style="width: 650px; height: 500px;"></div>
+    </div>
+    <div class="col-6">
+        <div id="orgChart" style="width: 650px; height: 500px;"></div>
+    </div>
+    <div class="col-6">
+        <div id="curve_chart" style="width: 650px; height: 500px;"></div>
+    </div>
+
+</div>

@@ -1,0 +1,63 @@
+@model IEnumerable<Cart>
+
+<div class="row">
+    <!-- Form for Checkout Information -->
+    <div class="col-7">
+        <form method="post">
+            <div class="row mb-1">
+                <label class="col-2 form-label" for="FullName">Fullname</label>
+                <div class="col-10">
+                    <input class="form-control" type="text" id="FullName" name="fullname" />
+                </div>
+            </div>
+
+            <div class="row mb-1">
+                <label class="col-2 form-label" for="Email">Email</label>
+                <div class="col-10">
+                    <input class="form-control" type="email" id="Email" name="email" />
+                </div>
+            </div>
+
+            <div class="row mb-1">
+                <label class="col-2 form-label" for="Phone">Phone</label>
+                <div class="col-10">
+                    <input class="form-control" type="text" id="Phone" name="phone" />
+                </div>
+            </div>
+
+            <div class="row mb-1">
+                <label class="col-2 form-label" for="Address">Address</label>
+                <div class="col-10">
+                    <input class="form-control" type="text" id="Address" name="address" />
+                </div>
+            </div>
+
+            <button class="btn btn-primary">Confirm checkout</button>
+        </form>
+    </div>
+    <div class="col-5">
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.Price</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">
+                    @Model.Sum(p => p.Price * p.Quantity)
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

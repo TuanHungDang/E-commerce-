@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = ViewBag.Product.ProductName;
+}
+
+<div class="row">
+    <div class="col-3">
+        <ul>@foreach (Category item in ViewBag.Categories)
+            {
+                <li>
+                    <a href="/home/category/@item.CategoryId">@item.CategoryName</a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="col-9">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">@ViewBag.Product.ProductName</h1>
+            </div>
+            <div class="card-body">
+                <div>
+                   <img class="img-fluid" src="/images/Products/@ViewBag.Product.Image" alt="@ViewBag.ProductName">
+                </div>
+                <p>Giá: <b>@ViewBag.Product.Price</b>, Giảm giá: <b>@ViewBag.Product.SaleOff</b> </p>
+                <p>Số lượt xem: <b>@ViewBag.Product.Viewed</b></p>
+                <form action="/cart/add" method="post" class="row">
+                        <input type="hidden"name="productId" value="@ViewBag.Product.ProductId">
+                        <div class="col">
+                            <input class="form-control" type="number" value="1" min="1" max="10" name="quantity">
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-primary">Add to cart</button>
+                        </div>
+                </form>
+                <div>@ViewBag.Product.Description</div>
+            </div>
+        </div>
+        <h3>Sản Phẩm Liên Quan</h3>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-4">
+                    <h2 class="h6">
+                        <a href="/home/details/@item.ProductId">@item.ProductName</a>
+                    </h2>
+                    <img class="img-fluid" src="/images/Products/@item.Image" alt="@item.ProductName">
+                    <p>@item.Price</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

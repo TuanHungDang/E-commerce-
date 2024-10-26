@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "H-Shop";
+}
+
+<div class="row">
+    <div class="col-3">
+        <ul>@foreach (Category item in ViewBag.Categories)
+            {
+                <li>
+                    <a href="/home/category/@item.CategoryId">@item.CategoryName</a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="col-9">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-4">
+                    <h2 class="h6">
+                        <a href="/home/details/@item.ProductId">@item.ProductName</a>
+                    </h2>
+                    <img class="img-fluid" src="/images/Products/@item.Image" alt="@item.ProductName">
+                    <p>@item.Price</p>
+                </div>
+            }
+        </div>  
+    </div>
+</div>
